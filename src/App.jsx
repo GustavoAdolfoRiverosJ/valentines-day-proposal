@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Quieres ser mi San Valentín? ❤️</h1>
+      <h1>Would you like to be my Valentine? ❤️</h1>
       <img src={image} alt="San Valentín" className="photo" />
       <div className="buttons">
         <button className="yes">Sí ❤️</button>
