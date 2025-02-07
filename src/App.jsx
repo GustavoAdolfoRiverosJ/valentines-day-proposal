@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import IntroScreen from "./components/IntroScreen";
 import image from "./assets/image.jpeg";
 import errorSound from "./assets/error-sound.wav";
 import backgroundMusic from "./assets/background-music.mp3";
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
   const [noMessage, setNoMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -13,18 +15,12 @@ function App() {
   useEffect(() => {
     audio.volume = 0.2;
     audio.loop = true;
-
-    const startMusic = () => {
-      audio.play().catch((err) => console.log("Error al reproducir:", err));
-      document.removeEventListener("click", startMusic);
-    };
-
-    document.addEventListener("click", startMusic);
-
-    return () => {
-      document.removeEventListener("click", startMusic);
-    };
   }, [audio]);
+
+  const startValentineScreen = () => {
+    setShowIntro(false);
+    audio.play().catch((err) => console.log("Error al reproducir:", err));
+  };
 
   const messages = ["Piénsalo bien! 😏", "¿Estás segura? 🥺", "No lo hagas! 💔"];
 
@@ -69,23 +65,31 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Would you like to be my Valentine? ❤️</h1>
-      <img src={image} alt="San Valentín" className="photo" />
-      <div className="buttons">
-        <button className="yes" onClick={handleYesClick}>Sí ❤️</button>
-        <button
-          className="no"
-          style={{ position: "absolute", top: noPosition.top, left: noPosition.left }}
-          onMouseEnter={moveNoButton}
-          onClick={handleNoClick}
-        >
-          No 💔
-        </button>
-      </div>
-      {showPopup && (
-        <div className="popup">
-          <p>{noMessage}</p>
-        </div>
+      {showIntro ? (
+        <IntroScreen startValentineScreen={startValentineScreen} />
+      ) : (
+        <>
+          <h1>Would you like to be my Valentine? ❤️</h1>
+          <img src={image} alt="San Valentín" className="photo" />
+          <div className="buttons">
+            <button className="yes" onClick={handleYesClick}>Sí ❤️</button>
+            <button
+              className="no"
+              style={{ position: "absolute", top: noPosition.top, left: noPosition.left }}
+              onMouseEnter={moveNoButton}
+              onClick={handleNoClick}
+            >
+              No 💔
+            </button>
+          </div>
+
+          {/* Popup del mensaje cuando se hace clic en "No" */}
+          {showPopup && (
+            <div className="popup">
+              <p>{noMessage}</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
