@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import image from "./assets/image.jpeg";
+import errorSound from "./assets/error-sound.wav";
+import backgroundMusic from "./assets/background-music.mp3";
 
 function App() {
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
   const [noMessage, setNoMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [audio] = useState(new Audio(backgroundMusic));
+
+  useEffect(() => {
+    audio.volume = 0.2;
+    audio.loop = true;
+
+    const startMusic = () => {
+      audio.play().catch((err) => console.log("Error al reproducir:", err));
+      document.removeEventListener("click", startMusic);
+    };
+
+    document.addEventListener("click", startMusic);
+
+    return () => {
+      document.removeEventListener("click", startMusic);
+    };
+  }, [audio]);
 
   const messages = ["Piénsalo bien! 😏", "¿Estás segura? 🥺", "No lo hagas! 💔"];
 
@@ -20,6 +39,10 @@ function App() {
     moveNoButton();
     setNoMessage(messages[Math.floor(Math.random() * messages.length)]);
     setShowPopup(true);
+
+    const audio = new Audio(errorSound);
+    audio.play();
+
     setTimeout(() => {
       setShowPopup(false);
     }, 2000);
