@@ -4,6 +4,10 @@ import image from "./assets/image.jpeg";
 
 function App() {
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
+  const [noMessage, setNoMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+
+  const messages = ["Piénsalo bien! 😏", "¿Estás segura? 🥺", "No lo hagas! 💔"];
 
   const moveNoButton = () => {
     const newTop = Math.random() * 80 + "%";
@@ -12,20 +16,54 @@ function App() {
     setNoPosition({ top: newTop, left: newLeft });
   };
 
+  const handleNoClick = () => {
+    moveNoButton();
+    setNoMessage(messages[Math.floor(Math.random() * messages.length)]);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
+  };
+
+  const handleYesClick = () => {
+    const heartsContainer = document.createElement("div");
+    heartsContainer.classList.add("hearts-container");
+    document.body.appendChild(heartsContainer);
+
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.animationDuration = `${Math.random() * 2 + 1}s`;
+      heartsContainer.appendChild(heart);
+    }
+
+    setTimeout(() => {
+      heartsContainer.remove();
+    }, 5000);
+  };
+
+
   return (
     <div className="container">
       <h1>Would you like to be my Valentine? ❤️</h1>
       <img src={image} alt="San Valentín" className="photo" />
       <div className="buttons">
-        <button className="yes">Sí ❤️</button>
+        <button className="yes" onClick={handleYesClick}>Sí ❤️</button>
         <button
           className="no"
-          style={{ top: noPosition.top, left: noPosition.left }}
+          style={{ position: "absolute", top: noPosition.top, left: noPosition.left }}
           onMouseEnter={moveNoButton}
+          onClick={handleNoClick}
         >
           No 💔
         </button>
       </div>
+      {showPopup && (
+        <div className="popup">
+          <p>{noMessage}</p>
+        </div>
+      )}
     </div>
   );
 }

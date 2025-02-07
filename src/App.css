@@ -59,6 +59,8 @@ button {
 .yes {
   background-color: #ff4d6d;
   color: white;
+  position: relative;
+  overflow: hidden;
 }
 
 .yes:hover {
@@ -66,9 +68,84 @@ button {
   background-color: #ff1744;
 }
 
+/* Efecto de corazones flotando al hacer clic en "Sí" */
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  clip-path: polygon(50% 0%, 100% 30%, 75% 100%, 50% 80%, 25% 100%, 0% 30%);
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
 .no {
   position: absolute;
   background-color: #ccc;
   color: black;
-  transition: 0.3s ease-in-out;
+  transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.no-message {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff1744;
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Popup bonito para el mensaje del botón "No" */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff1744;
+  text-align: center;
+  z-index: 1000;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+/* Animación para que el popup aparezca y desaparezca suavemente */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -55%); }
+  10% { opacity: 1; transform: translate(-50%, -50%); }
+  90% { opacity: 1; transform: translate(-50%, -50%); }
+  100% { opacity: 0; transform: translate(-50%, -45%); }
 }
