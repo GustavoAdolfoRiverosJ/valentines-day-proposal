@@ -64,20 +64,22 @@ function App() {
 
   const handleYesClick = () => {
     const heartsContainer = document.createElement("div");
-    heartsContainer.classList.add("hearts-container");
+    heartsContainer.classList.add("hearts-click-container");
     document.body.appendChild(heartsContainer);
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 50; i++) {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
+      heart.classList.add("heart-click");
       heart.style.left = `${Math.random() * 100}vw`;
       heart.style.animationDuration = `${Math.random() * 2 + 1}s`;
+      heart.style.width = `${Math.random() * 30 + 10}px`; // Tamaño aleatorio entre 10px y 40px
+      heart.style.height = heart.style.width;
       heartsContainer.appendChild(heart);
     }
 
     setTimeout(() => {
       heartsContainer.remove();
-    }, 5000);
+    }, 10000);
   };
 
 
