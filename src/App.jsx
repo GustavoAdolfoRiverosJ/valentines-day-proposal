@@ -64,11 +64,11 @@ function App() {
 
 
   return (
-    <div className="container">
+    <>
       {showIntro ? (
         <IntroScreen startValentineScreen={startValentineScreen} />
       ) : (
-        <>
+        <div className="container">
           <h1>Would you like to be my Valentine? ❤️</h1>
           <img src={image} alt="San Valentín" className="photo" />
           <div className="buttons">
@@ -82,16 +82,15 @@ function App() {
               No 💔
             </button>
           </div>
-
-          {/* Popup del mensaje cuando se hace clic en "No" */}
+  
           {showPopup && (
             <div className="popup">
               <p>{noMessage}</p>
             </div>
           )}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
