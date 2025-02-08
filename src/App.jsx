@@ -7,6 +7,7 @@ import backgroundMusic from "./assets/background-music.mp3";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [showProposal, setShowProposal] = useState(false);
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
   const [noMessage, setNoMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -20,9 +21,17 @@ function App() {
   const startValentineScreen = () => {
     setShowIntro(false);
     audio.play().catch((err) => console.log("Error al reproducir:", err));
+
+    setTimeout(() => {
+      setShowProposal(true);
+    }, 100);
   };
 
-  const messages = ["Piénsalo bien! 😏", "¿Estás segura? 🥺", "No lo hagas! 💔"];
+  const messages = [
+    "Piénsalo bien! 😏. No es la respuesta correcta",
+    "¿Estás segura? 🥺. No es la respuesta correcta",
+    "No lo hagas! 💔. No es la respuesta correcta"
+  ];
 
   const moveNoButton = () => {
     const newTop = Math.random() * 80 + "%";
@@ -68,7 +77,7 @@ function App() {
       {showIntro ? (
         <IntroScreen startValentineScreen={startValentineScreen} />
       ) : (
-        <div className="container">
+        <div className={`container ${showProposal ? "show" : ""}`}>
           <h1>Would you like to be my Valentine? ❤️</h1>
           <img src={image} alt="San Valentín" className="photo" />
           <div className="buttons">
