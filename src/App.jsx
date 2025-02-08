@@ -8,6 +8,7 @@ import backgroundMusic from "./assets/background-music.mp3";
 function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [showProposal, setShowProposal] = useState(false);
+  const [hearts, setHearts] = useState([]); // Estado para almacenar los corazones de fondo
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
   const [noMessage, setNoMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -24,19 +25,30 @@ function App() {
 
     setTimeout(() => {
       setShowProposal(true);
-    }, 100);
+      generateFloatingHearts();
+    }, 1000);
+  };
+
+  const generateFloatingHearts = () => {
+    const heartsArray = Array.from({ length: 20 }).map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}vw`,
+      animationDuration: `${Math.random() * 5 + 3}s`,
+      delay: `${Math.random() * 3}s`,
+      size: `${Math.random() * 20 + 10}px`, // Tamaños aleatorios entre 10px y 30px
+    }));
+    setHearts(heartsArray);
   };
 
   const messages = [
     "Piénsalo bien! 😏. No es la respuesta correcta",
     "¿Estás segura? 🥺. No es la respuesta correcta",
-    "No lo hagas! 💔. No es la respuesta correcta"
+    "No lo hagas! 💔. No es la respuesta correcta",
   ];
 
   const moveNoButton = () => {
     const newTop = Math.random() * 80 + "%";
     const newLeft = Math.random() * 80 + "%";
-    console.log("Nueva posición:", { top: newTop, left: newLeft });
     setNoPosition({ top: newTop, left: newLeft });
   };
 
@@ -44,10 +56,7 @@ function App() {
     moveNoButton();
     setNoMessage(messages[Math.floor(Math.random() * messages.length)]);
     setShowPopup(true);
-
-    const audio = new Audio(errorSound);
-    audio.play();
-
+    new Audio(errorSound).play();
     setTimeout(() => {
       setShowPopup(false);
     }, 2000);
@@ -77,27 +86,52 @@ function App() {
       {showIntro ? (
         <IntroScreen startValentineScreen={startValentineScreen} />
       ) : (
-        <div className={`container ${showProposal ? "show" : ""}`}>
-          <h1>Would you like to be my Valentine? ❤️</h1>
-          <img src={image} alt="San Valentín" className="photo" />
-          <div className="buttons">
-            <button className="yes" onClick={handleYesClick}>Sí ❤️</button>
-            <button
-              className="no"
-              style={{ position: "absolute", top: noPosition.top, left: noPosition.left }}
-              onMouseEnter={moveNoButton}
-              onClick={handleNoClick}
-            >
-              No 💔
-            </button>
+        <>
+          <div className="hearts-background">
+            {hearts.map((heart) => (
+              <div
+                key={heart.id}
+                className="heart-floating"
+                style={{
+                  left: heart.left,
+                  animationDuration: heart.animationDuration,
+                  animationDelay: heart.delay,
+                  width: heart.size,
+                  height: heart.size,
+                }}
+              ></div>
+            ))}
           </div>
-  
-          {showPopup && (
-            <div className="popup">
-              <p>{noMessage}</p>
+
+          {/* ❤️ Contenedor de la propuesta */}
+          <div className={`container ${showProposal ? "show" : ""}`}>
+            <h1>Would you like to be my Valentine? ❤️</h1>
+            <img src={image} alt="San Valentín" className="photo" />
+            <div className="buttons">
+              <button className="yes" onClick={handleYesClick}>
+                Sí ❤️
+              </button>
+              <button
+                className="no"
+                style={{
+                  position: "absolute",
+                  top: noPosition.top,
+                  left: noPosition.left,
+                }}
+                onMouseEnter={moveNoButton}
+                onClick={handleNoClick}
+              >
+                No 💔
+              </button>
             </div>
-          )}
-        </div>
+
+            {showPopup && (
+              <div className="popup">
+                <p>{noMessage}</p>
+              </div>
+            )}
+          </div>
+        </>
       )}
     </>
   );
