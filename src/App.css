@@ -252,3 +252,54 @@ button {
     opacity: 0;
   }
 }
+
+
+/* FINAL MESSAGE */
+/* 💖 Mensaje final con animación */
+.final-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ff4d6d;
+  font-weight: bold;
+  opacity: 0;
+  animation: showFinalMessage 1.5s ease-in-out forwards;
+}
+
+/* 🎬 Animación para que el mensaje aparezca */
+@keyframes showFinalMessage {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -55%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 🎥 Estilo para el GIF en el mensaje final */
+.final-gif {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* ✨ Suaviza la aparición del GIF */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

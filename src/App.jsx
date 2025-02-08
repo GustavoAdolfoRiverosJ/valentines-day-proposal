@@ -8,6 +8,7 @@ import backgroundMusic from "./assets/background-music.mp3";
 function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [showProposal, setShowProposal] = useState(false);
+  const [showFinalMessage, setShowFinalMessage] = useState(false); // Estado para mostrar el mensaje final
   const [hearts, setHearts] = useState([]); // Estado para almacenar los corazones de fondo
   const [noPosition, setNoPosition] = useState({ top: "50%", left: "50%" });
   const [noMessage, setNoMessage] = useState("");
@@ -79,6 +80,7 @@ function App() {
 
     setTimeout(() => {
       heartsContainer.remove();
+      setShowFinalMessage(true);
     }, 10000);
   };
 
@@ -106,33 +108,44 @@ function App() {
           </div>
 
           {/* ❤️ Contenedor de la propuesta */}
-          <div className={`container ${showProposal ? "show" : ""}`}>
-            <h1>Would you like to be my Valentine? ❤️</h1>
-            <img src={image} alt="San Valentín" className="photo" />
-            <div className="buttons">
-              <button className="yes" onClick={handleYesClick}>
-                Sí ❤️
-              </button>
-              <button
-                className="no"
-                style={{
-                  position: "absolute",
-                  top: noPosition.top,
-                  left: noPosition.left,
-                }}
-                onMouseEnter={moveNoButton}
-                onClick={handleNoClick}
-              >
-                No 💔
-              </button>
-            </div>
-
-            {showPopup && (
-              <div className="popup">
-                <p>{noMessage}</p>
+          {!showFinalMessage ? (
+            <div className={`container ${showProposal ? "show" : ""}`}>
+              <h1>Would you like to be my Valentine? ❤️</h1>
+              <img src={image} alt="San Valentín" className="photo" />
+              <div className="buttons">
+                <button className="yes" onClick={handleYesClick}>
+                  Sí ❤️
+                </button>
+                <button
+                  className="no"
+                  style={{
+                    position: "absolute",
+                    top: noPosition.top,
+                    left: noPosition.left,
+                  }}
+                  onMouseEnter={moveNoButton}
+                  onClick={handleNoClick}
+                >
+                  No 💔
+                </button>
               </div>
-            )}
-          </div>
+
+              {showPopup && (
+                <div className="popup">
+                  <p>{noMessage}</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="final-message">
+              <p>💖 ¡Gracias por ser mi San Valentín! 💖</p>
+              <img
+                src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2g1NWluNjM0aHoxNDFubjlmZjBhMjl3emRuZmo3MHI5bXFwbXU0YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oriO6qJiXajN0TyDu/giphy.gif"
+                alt="San Valentín"
+                className="final-gif"
+              />
+            </div>
+          )}
         </>
       )}
     </>
