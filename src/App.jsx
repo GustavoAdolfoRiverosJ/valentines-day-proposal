@@ -24,9 +24,10 @@ function App() {
     setShowIntro(false);
     audio.play().catch((err) => console.log("Error al reproducir:", err));
 
+    generateFloatingHearts();
+
     setTimeout(() => {
       setShowProposal(true);
-      generateFloatingHearts();
     }, 1000);
   };
 
@@ -81,7 +82,7 @@ function App() {
     setTimeout(() => {
       heartsContainer.remove();
       setShowFinalMessage(true);
-    }, 10000);
+    }, 5000);
   };
 
 
@@ -110,7 +111,7 @@ function App() {
           {/* ❤️ Contenedor de la propuesta */}
           {!showFinalMessage ? (
             <div className={`container ${showProposal ? "show" : ""}`}>
-              <h1>Would you like to be my Valentine? ❤️</h1>
+              <h1>Te gustaría ser mi San Valentín? ❤️</h1>
               <img src={image} alt="San Valentín" className="photo" />
               <div className="buttons">
                 <button className="yes" onClick={handleYesClick}>
@@ -139,6 +140,7 @@ function App() {
           ) : (
             <div className="final-message">
               <p>💖 ¡Gracias por ser mi San Valentín! 💖</p>
+              <p>💖 Te quiero mucho, Marianita 💖</p>
               <img
                 src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2g1NWluNjM0aHoxNDFubjlmZjBhMjl3emRuZmo3MHI5bXFwbXU0YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oriO6qJiXajN0TyDu/giphy.gif"
                 alt="San Valentín"

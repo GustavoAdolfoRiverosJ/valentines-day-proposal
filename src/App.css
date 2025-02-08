@@ -21,6 +21,27 @@ body {
   transition: opacity 3s ease-in-out, transform 3s ease-in-out;
 }
 
+.container h1 {
+  color: #ff4d6d; /* Mismo color que el botón "Sí" */
+  font-family: "Dancing Script", cursive; /* Fuente romántica */
+  font-size: 2rem;
+  text-shadow: 2px 2px 10px rgba(255, 77, 109, 0.5); /* Suave sombra */
+  opacity: 0;
+  animation: fadeInTitle 1.5s ease-in-out forwards;
+}
+
+/* ✨ Animación para la aparición del título */
+@keyframes fadeInTitle {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .container.show {
   opacity: 1;
   transform: scale(1);
@@ -261,7 +282,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgb(222, 194, 194);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
