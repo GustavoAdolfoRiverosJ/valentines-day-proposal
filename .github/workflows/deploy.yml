@@ -32,7 +32,7 @@ jobs:
         run: ls -l dist
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2  # Corregido a v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
@@ -41,8 +41,6 @@ jobs:
     needs: build
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
